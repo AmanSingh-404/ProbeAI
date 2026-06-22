@@ -1,0 +1,85 @@
+# .gitignore for Multi-Agent Research Assistant
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+-built/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+share/
+wheel/
+*.egg-info/
+*.egg
+.eks/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+.venv/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Data (local datasets, scraped content, temp files)
+data/
+scraped/
+temp/
+*.csv
+*.json
+*.txt
+tabular_data/
+
+# Models (cached LLM configs, local model weights if any)
+models/
+*.bin
+*.pth
+*.pt
+
+# Secrets and credentials
+credentials/
+secret/
+*.key
+api_keys.json
+config.local.json
+
+# LangChain/LCEL caches
+.langchain/
+lcel_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Build artifacts
+*.egg-info/
+build/
