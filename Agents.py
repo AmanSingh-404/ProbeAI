@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 llm = ChatMistralAI(
-    model="mistral-large",
+    model="mistral-large-latest",
     temperature=0.3
 )
 
@@ -23,7 +23,7 @@ def build_search_agent():
 def build_read_agent():
     return create_agent(
         model=llm,
-        tool=[scrape_url]
+        tools=[scrape_url]
     )
 
 
