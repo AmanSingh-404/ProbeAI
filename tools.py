@@ -23,21 +23,15 @@ def web_search(query:str) -> str:
     
     return "\n----\n".join(out)
 
-print(web_search.invoke("latest news about AI"))
 
-
-# @tool
-# def web_scrape(url:str) -> str:
-#     """Scrape a single URL and return the full text content (first 2000 chars)."""
-#     try:
-#         response = requests.get(url,headers={"User-Agent":"Mozilla/5.0"},timeout=10)
-#         response.raise_for_status()
-
-#         soup = BeautifulSoup(response.content,"html.parser")
-
-#         text = soup.get_text()
-#         clean = " ".join(text.split())
-#         return clean[:2000]
-
-#     except Exception as e:
-#         return f"Error scraping {url}: {str(e)[:200]}"
+@tool
+def scrape_url(url: str) -> str:
+    """ Scrape  and return clean text  content  from given URL for deeper reading. """
+    try:
+        resp = requests.get(url, timeout=8, headers={"User-Agent": "Mozilla/5.0"})
+        soup = BeautifulSoup(resp.text, "html.parser")
+        for tag in soup(['style','script','head','footer', 'nav']):
+            tag.decompose()
+        return soup.get_text(separator=" ", strip=True)[:3000]
+    except Exception as e:
+        return f"Error scraping {url}: {e}"
