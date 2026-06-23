@@ -1,4 +1,4 @@
-from Agents import build_read_agent , build_search_agent , write_chain , critic_chain
+from Agents import build_read_agent , build_search_agent , writer_chain , critic_chain
 
 def run_research_pipeline(topic : str) -> dict:
 
@@ -46,7 +46,7 @@ def run_research_pipeline(topic : str) -> dict:
         f"DETAILED SCRAPED CONTENT : \n {state['scraped_content']}"
     )
 
-    state["report"] = write_chain.invoke({
+    state["report"] = writer_chain.invoke({
         "topic" : topic,
         "research" : research_combined
     })
