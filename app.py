@@ -213,6 +213,25 @@ STAGE_LABELS = {
 }
 STAGE_CLASS = {"search": "s-search", "read": "s-read", "write": "s-write", "critique": "s-critique"}
 
+
+def extract_text(content):
+    """Agent messages sometimes return a list of content blocks
+    (e.g. [{'type': 'text', 'text': '...'}, {'type': 'reference', ...}])
+    instead of a plain string. Pull out just the readable text."""
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts = []
+        for block in content:
+            if isinstance(block, dict):
+                if block.get("type") == "text":
+                    parts.append(block.get("text", ""))
+            elif isinstance(block, str):
+                parts.append(block)
+        return "".join(parts).strip()
+    return str(content)
+
+
 left, right = st.columns([1, 2.2], gap="large")
 
 with left:
@@ -311,7 +330,7 @@ if submitted:
             search_result = search_agent.invoke({
                 "messages": [("user", f"Find recent, reliable and detailed information about: {topic}")]
             })
-            state["search_results"] = search_result["messages"][-1].content
+            state["search_results"] = extract_text(search_result["messages"][-1].content)
             elapsed["search"] = f"{time.time()-t0:.2f}s"
             done[0] = True
             render_panel(0, "search", STAGE_LABELS["search"], state["search_results"], "done", elapsed["search"])
@@ -328,7 +347,7 @@ if submitted:
                     f"Search Results:\n{state['search_results'][:800]}"
                 )]
             })
-            state["scraped_content"] = reader_result["messages"][-1].content
+            state["scraped_content"] = extract_text(reader_result["messages"][-1].content)
             elapsed["read"] = f"{time.time()-t0:.2f}s"
             done[1] = True
             render_panel(1, "read", STAGE_LABELS["read"], state["scraped_content"], "done", elapsed["read"])
@@ -341,7 +360,7 @@ if submitted:
                 f"SEARCH RESULTS : \n {state['search_results']} \n\n"
                 f"DETAILED SCRAPED CONTENT : \n {state['scraped_content']}"
             )
-            state["report"] = writer_chain.invoke({"topic": topic, "research": research_combined})
+            state["report"] = extract_text(writer_chain.invoke({"topic": topic, "research": research_combined}))
             elapsed["write"] = f"{time.time()-t0:.2f}s"
             done[2] = True
             render_panel(2, "write", STAGE_LABELS["write"], state["report"], "done", elapsed["write"])
@@ -350,7 +369,7 @@ if submitted:
             render_rail(3, done, elapsed)
             render_panel(3, "critique", STAGE_LABELS["critique"], "Reviewing draft…", "active")
             t0 = time.time()
-            state["feedback"] = critic_chain.invoke({"report": state["report"]})
+            state["feedback"] = extract_text(critic_chain.invoke({"report": state["report"]}))
             elapsed["critique"] = f"{time.time()-t0:.2f}s"
             done[3] = True
             render_panel(3, "critique", STAGE_LABELS["critique"], state["feedback"], "done", elapsed["critique"])
