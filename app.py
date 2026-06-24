@@ -201,25 +201,25 @@ with left:
     if not submitted and st.session_state.state is None:
         rail_html = "<div class='rail'>"
         for s in STAGES:
-            rail_html += f"""
-            <div class="rail-node" style="margin-bottom:1.4rem;">
-              <div class="rail-dot"></div>
-              <div class="panel-label">{STAGE_LABELS[s]}</div>
-            </div>
-            """
+            rail_html += (
+                '<div class="rail-node" style="margin-bottom:1.4rem;">'
+                '<div class="rail-dot"></div>'
+                f'<div class="panel-label">{STAGE_LABELS[s]}</div>'
+                '</div>'
+            )
         rail_html += "</div>"
         st.markdown(rail_html, unsafe_allow_html=True)
     elif st.session_state.state:
         rail_html = "<div class='rail'>"
         for s in STAGES:
             t = st.session_state.elapsed.get(s, "")
-            rail_html += f"""
-            <div class="rail-node" style="margin-bottom:1.1rem;">
-              <div class="rail-dot done"></div>
-              <div class="panel-label done">{STAGE_LABELS[s]}</div>
-              <div class="panel-time">{t}</div>
-            </div>
-            """
+            rail_html += (
+                '<div class="rail-node" style="margin-bottom:1.1rem;">'
+                '<div class="rail-dot done"></div>'
+                f'<div class="panel-label done">{STAGE_LABELS[s]}</div>'
+                f'<div class="panel-time">{t}</div>'
+                '</div>'
+            )
         rail_html += "</div>"
         st.markdown(rail_html, unsafe_allow_html=True)
 
@@ -237,13 +237,13 @@ with right:
             elif i == active_idx:
                 dot_cls += " active"; label_cls += " active"
                 t = "running…"
-            rail_html += f"""
-            <div class="rail-node" style="margin-bottom:0.5rem;">
-              <div class="{dot_cls}"></div>
-              <div class="{label_cls}">{STAGE_LABELS[s]}</div>
-              <div class="panel-time">{t}</div>
-            </div>
-            """
+            rail_html += (
+                '<div class="rail-node" style="margin-bottom:0.5rem;">'
+                f'<div class="{dot_cls}"></div>'
+                f'<div class="{label_cls}">{STAGE_LABELS[s]}</div>'
+                f'<div class="panel-time">{t}</div>'
+                '</div>'
+            )
         rail_html += "</div>"
         rail_box.markdown(rail_html, unsafe_allow_html=True)
 
@@ -257,15 +257,16 @@ with right:
             tag = '<span class="status-tag run">running…</span>'
         else:
             tag = ""
-        panel_boxes[idx].markdown(f"""
-        <div class="panel {cls}">
-          <div class="panel-top">
-            <div class="panel-label {cls}">{title}</div>
-            {tag}
-          </div>
-          <div class="panel-body">{content}</div>
-        </div>
-        """, unsafe_allow_html=True)
+        html = (
+            f'<div class="panel {cls}">'
+            f'<div class="panel-top">'
+            f'<div class="panel-label {cls}">{title}</div>'
+            f'{tag}'
+            f'</div>'
+            f'<div class="panel-body">{content}</div>'
+            f'</div>'
+        )
+        panel_boxes[idx].markdown(html, unsafe_allow_html=True)
 
 if submitted:
     if not topic.strip():
@@ -341,12 +342,13 @@ if submitted:
 if st.session_state.state:
     st.markdown("<hr style='margin:2.5rem 0 1.5rem 0;'>", unsafe_allow_html=True)
     total = sum(float(v.replace("s", "")) for v in st.session_state.elapsed.values()) if st.session_state.elapsed else 0
-    st.markdown(f"""
-    <div class="hud-bar" style="border-bottom:none; margin-bottom:0.8rem;">
-      <span class="rig-eyebrow" style="margin:0;">Output</span>
-      <span>TOTAL RUNTIME: {total:.2f}s</span>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="hud-bar" style="border-bottom:none; margin-bottom:0.8rem;">'
+        f'<span class="rig-eyebrow" style="margin:0;">Output</span>'
+        f'<span>TOTAL RUNTIME: {total:.2f}s</span>'
+        f'</div>',
+        unsafe_allow_html=True
+    )
 
     tab1, tab2, tab3, tab4 = st.tabs(["Search", "Scraped", "Report", "Critique"])
     with tab1:
