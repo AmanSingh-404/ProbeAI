@@ -1,6 +1,6 @@
 import time
 import streamlit as st
-from agents import build_read_agent, build_search_agent, writer_chain, critic_chain
+from Agents import build_read_agent, build_search_agent, writer_chain, critic_chain
 
 st.set_page_config(page_title="research.exec()", page_icon="◆", layout="wide")
 
