@@ -1,0 +1,41 @@
+# LangChain
+langchain
+langchain-core
+langchain-community
+
+# Mistral AI
+langchain-mistralai
+mistralai
+
+# LangGraph
+langgraph
+
+# Tavily Search
+tavily-python
+
+# Web Scraping
+beautifulsoup4
+requests
+lxml
+
+# Environment Variables
+python-dotenv
+
+# Tokenization
+tiktoken
+
+# Data Validation
+pydantic
+
+# Utilities
+numpy
+pandas
+
+# Async Requests
+httpx
+
+# Pretty Output
+rich
+
+# Type Hints
+typing-extensions

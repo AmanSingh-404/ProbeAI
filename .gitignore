@@ -1,13 +1,12 @@
-# .gitignore for Multi-Agent Research Assistant
-
+# =========================
 # Python
+# =========================
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
--built/
-develop-eggs/
+build/
 dist/
 downloads/
 eggs/
@@ -20,66 +19,114 @@ share/
 wheel/
 *.egg-info/
 *.egg
-.eks/
 
-# Environments
+# =========================
+# Virtual Environments
+# =========================
 .env
-.venv
-env/
-venv/
-ENV/
+.env.*
 .venv/
+venv/
+env/
+ENV/
 
+# =========================
 # IDEs
+# =========================
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS
+# =========================
+# OS Files
+# =========================
 .DS_Store
 Thumbs.db
 
+# =========================
 # Logs
+# =========================
 *.log
 logs/
 
-# Data (local datasets, scraped content, temp files)
+# =========================
+# Data
+# =========================
 data/
 scraped/
 temp/
-*.csv
-*.json
-*.txt
 tabular_data/
 
-# Models (cached LLM configs, local model weights if any)
+# Ignore datasets only
+*.csv
+
+# =========================
+# Models
+# =========================
 models/
 *.bin
 *.pth
 *.pt
+*.ckpt
+*.safetensors
 
-# Secrets and credentials
+# =========================
+# Secrets
+# =========================
 credentials/
 secret/
 *.key
+*.pem
 api_keys.json
 config.local.json
+.streamlit/secrets.toml
 
-# LangChain/LCEL caches
+# =========================
+# LangChain / Vector DB
+# =========================
 .langchain/
 lcel_cache/
+.langgraph/
+chroma_db/
+chromadb/
+vectorstore/
+vectorstores/
+faiss_index/
+*.faiss
 
+# =========================
 # Jupyter
+# =========================
 .ipynb_checkpoints/
-*.ipynb
 
+# Uncomment if you don't want notebooks in Git
+# *.ipynb
+
+# =========================
 # Testing
+# =========================
 .coverage
 htmlcov/
 .pytest_cache/
+.mypy_cache/
 
-# Build artifacts
-*.egg-info/
-build/
+# =========================
+# Node.js
+# =========================
+node_modules/
+.next/
+
+# =========================
+# Databases
+# =========================
+*.db
+*.sqlite
+*.sqlite3
+
+# =========================
+# Temp Files
+# =========================
+*.tmp
+*.temp
